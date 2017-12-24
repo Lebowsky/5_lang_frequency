@@ -4,6 +4,7 @@ The script displays ten most popular words in the text from the transferred file
 
 # How to Use
 
+```bash
 python3 lang_frequency.py <path to file>
 
 ====Ten most popular words====
@@ -17,7 +18,7 @@ object......... ..............4
 of............. ..............4
 should......... ..............4
 calls.......... ..............3
-
+```
 
 # Project Goals
 
