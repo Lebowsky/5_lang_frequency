@@ -4,16 +4,19 @@ from collections import Counter
 
 
 def load_data(filepath):
-    with open(filepath, encoding='utf-8') as f:
-        return f.read()
+    with open(filepath, encoding='utf-8') as data:
+        return data.read()
 
 
 def get_most_frequent_words(text_array):
-    text_array = sorted(text_array.lower().translate(''.maketrans(
-        '', '', string.punctuation)).split())
-    counter = Counter()
-    for word in text_array:
-        counter[word] += 1
+    text_array = sorted(
+        text_array.lower().translate(''.maketrans(
+            '',
+            '',
+            string.punctuation)
+        ).split(),
+    )
+    counter = Counter(text_array)
     return counter
 
 
@@ -26,7 +29,11 @@ if __name__ == '__main__':
         text_data = load_data(sys.argv[1])
         counter = get_most_frequent_words(text_data)
         print('Ten most popular words'.center(length_string, '='))
-        for kw in counter.most_common()[:number_of_words]:
-            print(kw[0].ljust(half_length_string, '.'), str(kw[1]).rjust(half_length_string, '.'))
+        for kw in counter.most_common(number_of_words):
+            word, count = kw
+            print(
+                word.ljust(half_length_string, '.'),
+                str(count).rjust(half_length_string, '.')
+            )
     else:
         print('You must specify the path to the text file!')
