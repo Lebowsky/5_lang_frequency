@@ -4,36 +4,34 @@ from collections import Counter
 
 
 def load_data(filepath):
-    with open(filepath, encoding='utf-8') as data:
-        return data.read()
+    with open(filepath, encoding='utf-8') as file:
+        return file.read()
 
 
-def get_most_frequent_words(text_array):
-    text_array = sorted(
-        text_array.lower().translate(''.maketrans(
+def get_most_frequent_words(text, number_of_words):
+    text_list = text.lower().translate(''.maketrans(
             '',
             '',
-            string.punctuation)
-        ).split(),
-    )
-    counter = Counter(text_array)
-    return counter
+            string.punctuation),
+        ).split()
+    counter = Counter(text_list)
+    return [{'word': word, 'count': count}
+            for word, count in counter.most_common(number_of_words)]
 
 
 if __name__ == '__main__':
-    length_string = 30
-    half_length_string = int(length_string/2)
-    number_of_words = 10
-
     if len(sys.argv) > 1:
-        text_data = load_data(sys.argv[1])
-        counter = get_most_frequent_words(text_data)
+        length_string = 30
+        half_length_string = int(length_string / 2)
+        number_of_words = 10
+
+        text = load_data(sys.argv[1])
+        words_list = get_most_frequent_words(text, number_of_words)
         print('Ten most popular words'.center(length_string, '='))
-        for kw in counter.most_common(number_of_words):
-            word, count = kw
+        for word_dict in words_list:
             print(
-                word.ljust(half_length_string, '.'),
-                str(count).rjust(half_length_string, '.')
+                word_dict['word'].ljust(half_length_string, '.'),
+                str(word_dict['count']).rjust(half_length_string, '.')
             )
     else:
         print('You must specify the path to the text file!')
