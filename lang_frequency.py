@@ -15,8 +15,7 @@ def get_most_frequent_words(text, number_of_words):
             string.punctuation),
         ).split()
     counter = Counter(text_list)
-    return [{'word': word, 'count': count}
-            for word, count in counter.most_common(number_of_words)]
+    return counter.most_common(number_of_words)
 
 
 if __name__ == '__main__':
@@ -28,10 +27,10 @@ if __name__ == '__main__':
         text = load_data(sys.argv[1])
         words_list = get_most_frequent_words(text, number_of_words)
         print('Ten most popular words'.center(length_string, '='))
-        for word_dict in words_list:
+        for word, count in words_list:
             print(
-                word_dict['word'].ljust(half_length_string, '.'),
-                str(word_dict['count']).rjust(half_length_string, '.')
+                word.ljust(half_length_string, '.'),
+                str(count).rjust(half_length_string, '.')
             )
     else:
         print('You must specify the path to the text file!')
